@@ -166,7 +166,7 @@ function writePassword() {
     numeric === false &&
     special === false
   ) {
-    window.alert(
+    alert(
       "Select atleast 1 condition, lowercase, uppercase, numeric or special"
     );
   } else if (length >= 8 && length <= 128) {
@@ -179,7 +179,7 @@ function writePassword() {
     );
     var passwordText = document.querySelector("#password");
   } else {
-    window.alert(
+    alert(
       "Password length should be at least 8 characters but no more than 128"
     );
   }
