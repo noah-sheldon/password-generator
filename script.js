@@ -92,55 +92,30 @@ var upperCasedCharacters = [
 function getPasswordOptions() {}
 
 // Function for getting a random element from an array
-function getRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+function getRandom(arr, length) {
+  return arr
+    .sort(() => Math.random() - Math.random())
+    .slice(0, length)
+    .join("");
 }
 
 // Function to generate password with user input
 function generatePassword(length, lowerCase, upperCase, numeric, special) {
   let password = "";
-  let l = lowerCase;
-  let u = upperCase;
-  let n = numeric;
-  let s = special;
-  // Loop through the length of the desired password and add randomly selected character types until reaching the total length.
-  // Generate the length of the password based on user input
-  for (i = 0; i < length; i++) {
-    password +=
-      l === true && u === false && n === false && s === false
-        ? getRandom(lowerCasedCharacters)
-        : l === false && u === true && n === false && s === false
-        ? getRandom(upperCasedCharacters)
-        : l === false && u === false && n === true && s === false
-        ? getRandom(numericCharacters)
-        : l === false && u === false && n === false && s === true
-        ? getRandom(specialCharacters)
-        : l === true && u === true && n === false && s === false
-        ? getRandom(lowerCasedCharacters.concat(upperCasedCharacters))
-        : l === true && u === true && n === true && s === false
-        ? getRandom(lowerCasedCharacters.concat(upperCasedCharacters, numericCharacters))
-        : l === true && u === true && n === true && s === true
-        ? getRandom(lowerCasedCharacters.concat(upperCasedCharacters, numericCharacters, specialCharacters))
-        : l === false && u === true && n === true && s === false
-        ? getRandom(numericCharacters.concat(upperCasedCharacters))
-        : l === false && u === true && n === true && s === true
-        ? getRandom(numericCharacters.concat(upperCasedCharacters, specialCharacters))
-        : l === false && u === false && n === true && s === true
-        ? getRandom(numericCharacters.concat(specialCharacters))
-        : l === true && u === true && n === false && s === true
-        ? getRandom(upperCasedCharacters.concat(specialCharacters,lowerCasedCharacters))
-        : l === true && u === true && n === false && s === true
-        ? getRandom(upperCasedCharacters.concat(specialCharacters,lowerCasedCharacters))
-        : l === true && u === false && n === true && s === true
-        ? getRandom(numericCharacters.concat(specialCharacters,lowerCasedCharacters))
-        : l === true && u === false && n === true && s === false
-        ? getRandom(numericCharacters.concat(lowerCasedCharacters))
-        : l === true && u === false && n === false && s === true
-        ? getRandom(specialCharacters.concat(lowerCasedCharacters))
-        : l === false && u === true && n === false && s === true
-        ? getRandom(upperCasedCharacters.concat(specialCharacters))
-        : ""
+  let arr = [];
+  if (lowerCase) {
+    arr = arr.concat(lowerCasedCharacters);
   }
+  if (upperCase) {
+    arr = arr.concat(upperCasedCharacters);
+  }
+  if (numeric) {
+    arr = arr.concat(numericCharacters);
+  }
+  if (special) {
+    arr = arr.concat(specialCharacters);
+  }
+  password = getRandom(arr, length);
   return password;
 }
 
@@ -154,11 +129,6 @@ function writePassword() {
   let upperCase = document.getElementById("upperCase").checked;
   let numeric = document.getElementById("numeric").checked;
   let special = document.getElementById("special").checked;
-  // console.log(length);
-  // console.log(lowerCase);
-  // console.log(upperCase);
-  // console.log(numeric);
-  // console.log(special);
 
   if (
     lowerCase === false &&
